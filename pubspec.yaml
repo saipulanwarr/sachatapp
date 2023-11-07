@@ -2,23 +2,26 @@ name: sachatapp
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=3.1.4 <4.0.0'
+environment:
+  sdk: ">=3.1.4 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.6
   firebase_core: 2.21.0
   firebase_auth: 4.12.1
   google_sign_in: 6.1.5
-  flutter: 
+  lottie: 2.7.0
+  flutter:
     sdk: flutter
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: ^2.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-
+  assets:
+    - assets/lottie/
+    - assets/logo/

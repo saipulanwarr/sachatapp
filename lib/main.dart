@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:sachatapp/app/utils/error_page.dart';
-import 'package:sachatapp/app/utils/loading_page.dart';
+import 'package:sachatapp/app/utils/error_screen.dart';
+import 'package:sachatapp/app/utils/loading_screen.dart';
+import 'package:sachatapp/app/utils/splash_screen.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -20,17 +21,27 @@ class MyApp extends StatelessWidget {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return ErrorPage();
+          print(snapshot.error);
+          return ErrorScreen();
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return GetMaterialApp(
-            title: "Chat App",
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
+          return FutureBuilder(
+            future: Future.delayed(Duration(seconds: 3)),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return GetMaterialApp(
+                  title: "Chat App",
+                  initialRoute: AppPages.INITIAL,
+                  getPages: AppPages.routes,
+                );
+              }
+
+              return SplashScreen();
+            },
           );
         }
 
-        return LoadingPage();
+        return LoadingScreen();
       },
     );
   }
