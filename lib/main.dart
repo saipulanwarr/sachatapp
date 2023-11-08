@@ -27,26 +27,31 @@ class MyApp extends StatelessWidget {
           return ErrorScreen();
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return FutureBuilder(
-            future: Future.delayed(Duration(seconds: 3)),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Obx(
-                  () => GetMaterialApp(
-                    title: "Chat App",
-                    initialRoute: authC.isSkipIntro.isTrue
-                        ? authC.isAuth.isTrue
-                            ? Routes.HOME
-                            : Routes.LOGIN
-                        : Routes.INTRODUCTION,
-                    getPages: AppPages.routes,
-                  ),
-                );
-              }
-
-              return SplashScreen();
-            },
+          return GetMaterialApp(
+            title: "Chat App",
+            initialRoute: Routes.LOGIN,
+            getPages: AppPages.routes,
           );
+          // return FutureBuilder(
+          //   future: Future.delayed(Duration(seconds: 3)),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.done) {
+          //       return Obx(
+          //         () => GetMaterialApp(
+          //           title: "Chat App",
+          //           initialRoute: authC.isSkipIntro.isTrue
+          //               ? authC.isAuth.isTrue
+          //                   ? Routes.HOME
+          //                   : Routes.LOGIN
+          //               : Routes.INTRODUCTION,
+          //           getPages: AppPages.routes,
+          //         ),
+          //       );
+          //     }
+
+          //     return SplashScreen();
+          //   },
+          // );
         }
 
         return LoadingScreen();
