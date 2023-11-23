@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:sachatapp/app/routes/app_pages.dart';
 
@@ -9,19 +10,32 @@ class AuthController extends GetxController {
 
   GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
+  UserCredential? userCredential;
 
   Future<void> login() async {
     try {
+      await _googleSignIn.signOut();
       await _googleSignIn.signIn().then((value) => _currentUser = value);
-      await _googleSignIn.isSignedIn().then((value) {
-        if (value) {
-          print(_currentUser);
-          isAuth.value = true;
-          Get.offAllNamed(Routes.HOME);
-        } else {
-          print("Login gagal");
-        }
-      });
+
+      final isSignIn = await _googleSignIn.isSignedIn();
+
+      if (isSignIn) {
+        print(_currentUser);
+        final googleAuth = await _currentUser!.authentication;
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+          accessToken: googleAuth.accessToken,
+        );
+
+        await FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) => userCredential = value);
+
+        isAuth.value = true;
+        Get.offAllNamed(Routes.HOME);
+      } else {
+        print("Login gagal");
+      }
     } catch (error) {
       print(error);
     }
