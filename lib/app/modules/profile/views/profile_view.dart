@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sachatapp/app/routes/app_pages.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -13,6 +14,13 @@ class ProfileView extends GetView<ProfileController> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
           actions: [
             IconButton(
               onPressed: () {},
@@ -71,7 +79,7 @@ class ProfileView extends GetView<ProfileController> {
                 child: Column(
                   children: [
                     ListTile(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.UPDATE_STATUS),
                       leading: Icon(Icons.note_add_outlined),
                       title: Text(
                         "Update Status",
@@ -82,7 +90,7 @@ class ProfileView extends GetView<ProfileController> {
                       trailing: Icon(Icons.arrow_right),
                     ),
                     ListTile(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.CHANGE_PROFILE),
                       leading: Icon(Icons.person),
                       title: Text(
                         "Change Profile",
