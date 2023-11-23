@@ -1,12 +1,13 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sachatapp/app/controllers/auth_controller.dart';
 import 'package:sachatapp/app/routes/app_pages.dart';
 
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  final authC = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class ProfileView extends GetView<ProfileController> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => authC.logout(),
               icon: Icon(
                 Icons.logout,
               ),
