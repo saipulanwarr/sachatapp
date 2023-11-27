@@ -259,24 +259,16 @@ class AuthController extends GetxController {
         final chatDataId = chatsDoc.docs[0].id;
         final chatsData = chatsDoc.docs[0].data() as Map<String, dynamic>;
 
-        await users.doc(_currentUser!.email).update({
-          "chats": [
-            {
-              "connection": friendEmail,
-              "chat_id": chatDataId,
-              "lastTime": chatsData["lastTime"],
-            }
-          ]
+        docChats.add({
+          "connection": friendEmail,
+          "chat_id": chatDataId,
+          "lastTime": chatsData["lastTime"],
         });
 
+        await users.doc(_currentUser!.email).update({"chats": docChats});
+
         user.update((user) {
-          user!.chats = [
-            ChatUser(
-              chatId: chatDataId,
-              connection: friendEmail,
-              lastTime: chatsData["lastTime"],
-            )
-          ];
+          user!.chats = docChats as List<ChatUser>;
         });
 
         chat_id = chatDataId;
@@ -291,24 +283,16 @@ class AuthController extends GetxController {
           "lastTime": date,
         });
 
-        await users.doc(_currentUser!.email).update({
-          "chats": [
-            {
-              "connection": friendEmail,
-              "chat_id": newChatDoc.id,
-              "lastTime": date,
-            }
-          ]
+        docChats.add({
+          "connection": friendEmail,
+          "chat_id": newChatDoc.id,
+          "lastTime": date,
         });
 
+        await users.doc(_currentUser!.email).update({"chats": docChats});
+
         user.update((user) {
-          user!.chats = [
-            ChatUser(
-              chatId: newChatDoc.id,
-              connection: friendEmail,
-              lastTime: date,
-            )
-          ];
+          user!.chats = docChats as List<ChatUser>;
         });
 
         chat_id = newChatDoc.id;
