@@ -10,7 +10,7 @@ class SearchContactController extends GetxController {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  void searchFriend(String data) async {
+  void searchFriend(String data, String email) async {
     if (data.length == 0) {
       queryAwal.value = [];
       tempSearch.value = [];

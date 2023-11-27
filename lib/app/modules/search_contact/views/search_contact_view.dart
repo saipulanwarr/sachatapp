@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sachatapp/app/controllers/auth_controller.dart';
 import 'package:sachatapp/app/routes/app_pages.dart';
 
 import '../controllers/search_contact_controller.dart';
 
 class SearchContactView extends GetView<SearchContactController> {
+  final authC = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +25,8 @@ class SearchContactView extends GetView<SearchContactController> {
               alignment: Alignment.bottomCenter,
               child: TextField(
                 controller: controller.searchC,
-                onChanged: (value) => controller.searchFriend(value),
+                onChanged: (value) =>
+                    controller.searchFriend(value, authC.user.value.email!),
                 cursorColor: Colors.red[900],
                 decoration: InputDecoration(
                   fillColor: Colors.white,
