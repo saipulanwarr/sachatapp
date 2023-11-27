@@ -84,6 +84,7 @@ class AuthController extends GetxController {
         user(UserModel(
           uid: currUserData["uid"],
           name: currUserData["name"],
+          keyName: currUserData["keyName"],
           email: currUserData["email"],
           photoUrl: currUserData["photoUrl"],
           status: currUserData["status"],
@@ -136,6 +137,7 @@ class AuthController extends GetxController {
           users.doc(_currentUser!.email).set({
             "uid": userCredential!.user!.uid,
             "name": _currentUser!.displayName,
+            "keyName": _currentUser!.displayName!.substring(0, 1).toUpperCase(),
             "email": _currentUser!.email,
             "photoUrl": _currentUser!.photoUrl ?? "noimage",
             "status": "",
@@ -158,6 +160,7 @@ class AuthController extends GetxController {
         user(UserModel(
           uid: currUserData["uid"],
           name: currUserData["name"],
+          keyName: currUserData["keyName"],
           email: currUserData["email"],
           photoUrl: currUserData["photoUrl"],
           status: currUserData["status"],
@@ -188,6 +191,7 @@ class AuthController extends GetxController {
 
     users.doc(_currentUser!.email).update({
       "name": name,
+      "keyName": name.substring(0, 1).toUpperCase(),
       "status": status,
       "lastSignInTime":
           userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
@@ -196,6 +200,7 @@ class AuthController extends GetxController {
 
     user.update((user) {
       user!.name = name;
+      user.keyName = name.substring(0, 1).toUpperCase();
       user.status = status;
       user.lastSignInTime =
           userCredential!.user!.metadata.lastSignInTime!.toIso8601String();

@@ -18,8 +18,8 @@ class SearchContactController extends GetxController {
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
 
       if (queryAwal.length == 0 && data.length == 1) {
-        CollectionReference clients = await firestore.collection("clients");
-        final keyNameResult = await clients
+        CollectionReference users = await firestore.collection("users");
+        final keyNameResult = await users
             .where("keyName", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();
 
@@ -35,9 +35,7 @@ class SearchContactController extends GetxController {
       if (queryAwal.length != 0) {
         tempSearch.value = [];
         queryAwal.forEach((element) {
-          if (element["name"].startsWith(capitalized)) {
-            tempSearch.add(element);
-          }
+          tempSearch.add(element);
         });
       }
     }
