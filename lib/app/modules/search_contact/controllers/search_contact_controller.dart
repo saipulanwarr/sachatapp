@@ -15,8 +15,6 @@ class SearchContactController extends GetxController {
       queryAwal.value = [];
       tempSearch.value = [];
     } else {
-      var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
-
       if (queryAwal.length == 0 && data.length == 1) {
         CollectionReference users = await firestore.collection("users");
         final keyNameResult = await users

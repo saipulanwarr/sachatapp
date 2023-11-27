@@ -95,7 +95,8 @@ class SearchContactView extends GetView<SearchContactController> {
                     style: TextStyle(fontSize: 16),
                   ),
                   trailing: GestureDetector(
-                    onTap: () => Get.toNamed(Routes.CHAT_ROOM),
+                    onTap: () => authC.addNewConnection(
+                        "${controller.tempSearch[index]["email"]}"),
                     child: Chip(
                       label: Text("Message"),
                     ),
