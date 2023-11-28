@@ -64,31 +64,51 @@ class HomeView extends GetView<HomeController> {
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     itemCount: allChats.length,
-                    itemBuilder: (context, index) => ListTile(
-                      onTap: () => Get.toNamed(Routes.CHAT_ROOM),
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.black26,
-                        child: Image.asset(
-                          "assets/logo/noimage.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      title: Text(
-                        "Title ${index + 1}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                        ),
-                      ),
-                      subtitle: Text(
-                        "Subtitle ${index + 1}",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      trailing: Chip(
-                        label: Text("3"),
-                      ),
-                    ),
+                    itemBuilder: (context, index) {
+                      return StreamBuilder<
+                          DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: controller
+                            .friendStream(allChats[index]["connection"]),
+                        builder: (context, snapshot2) {
+                          if (snapshot2.connectionState ==
+                              ConnectionState.active) {
+                            var data = snapshot2.data!.data();
+                            return ListTile(
+                              onTap: () => Get.toNamed(Routes.CHAT_ROOM),
+                              leading: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.black26,
+                                child: Image.asset(
+                                  "assets/logo/noimage.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Text(
+                                "${data!["name"]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "${data["status"]}",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              trailing: allChats[index]["total_unread"] == 0
+                                  ? SizedBox()
+                                  : Chip(
+                                      label: Text(
+                                          "${allChats[index]["total_unread"]}"),
+                                    ),
+                            );
+                          }
+
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                    },
                   );
                 }
                 return Center(
