@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sachatapp/app/controllers/auth_controller.dart';
-import 'package:sachatapp/app/routes/app_pages.dart';
 
 import '../controllers/search_contact_controller.dart';
 
